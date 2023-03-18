@@ -9,6 +9,7 @@
 <body>
     <script>
         const x = ['z', 'y', 'x', '.', '0', '0', '0', '7', '1', '5'].reverse().join("");
+        x = document.location.hash == '' ? x : document.location.hash.substr(1);
         Date.prototype.Format = function (fmt) {
             var o = {
                 "M+": this.getMonth() + 1, //月份
