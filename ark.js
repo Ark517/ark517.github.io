@@ -105,7 +105,7 @@
     // 更新数据
     const updateData = function () {
         $.ajax({
-            url: '/api/ASI',
+            url: '/api/ASI' + '?t=' + (new Date().getTime()),
             type: 'GET',
             dataType: 'json',
             success: function (data) {
@@ -137,9 +137,9 @@
             }
         })
     }
-    document.addEventListener('DOMContentLoaded', function () {
+    window.onload = function () {
         initBar();
         updateData();
-    });
-    setInterval(updateData, 5000);
+        setInterval(updateData, 5000);
+    }
 })();
