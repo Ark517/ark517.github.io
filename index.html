@@ -4,8 +4,12 @@
 <head>
     <title>直连地址</title>
     <meta charset="UTF-8">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
-    <script src="ark.js"></script>
+    <script>
+        const jsList = ["z.js", "ark.js"];
+        jsList.forEach(function (js) {
+            document.head.appendChild(document.createElement("script")).src = js + "?t=" + new Date().getTime();
+        })
+    </script>
 </head>
 
 <body></body>
