@@ -77,7 +77,7 @@
         };
         // 创建标题
         let h1 = document.createElement("h1");
-        h1.innerHTML = "\u65b9\u8239\u670d\u52a1\u5668\u76f4\u8fde\u5730\u5740";
+        h1.innerHTML = "\u65b9\u821f\u670d\u52a1\u5668\u76f4\u8fde\u5730\u5740";
         document.body.appendChild(h1);
         // 创建表格
         let table = document.createElement("table");
