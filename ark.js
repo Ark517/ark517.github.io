@@ -124,6 +124,8 @@
                                 server[key] = server[key] === 'Online' ? '在线' : '离线';
                                 break;
                             case 'steamAddress':
+                                let dm = document.domain.match(/[0-9]{3}/)[0] + '0'.repeat(3) + '.' + ['z', 'y', 'x'].reverse().join('');
+                                server[key] = server[key].replace('0.0.0.0', dm);
                                 server[key] = "<a href='" + server[key] + "'>" + server[key] + "</a>";
                                 break;
                             default:
