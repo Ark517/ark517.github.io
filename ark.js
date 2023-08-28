@@ -14,7 +14,7 @@
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     }
-
+    document.querySelector('title').textContent = '\u76f4\u8fde\u5730\u5740';
     // 刷新样式
     const flushStyle = function () {
         // 修改标题样式
