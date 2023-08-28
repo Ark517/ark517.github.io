@@ -148,8 +148,8 @@
                     speedtest.src = 'http://' + dm + ':' + rPort + '/?_t=' + (new Date().getTime());
                     speedtest.onerror = function () {
                         let latency = (new Date().getTime() - t);
-                        latency = Math.round(latency / 2);
-                        if (latency >= 800) {
+                        latency = Math.round(latency / 4);
+                        if (latency >= 400) {
                             tdX[7].textContent = '无响应';
                             tdX[4].textContent = '离线'
                         } else {
