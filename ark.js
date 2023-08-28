@@ -14,6 +14,9 @@
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     }
+    // 获取当前主域名
+    let dm = window.location.hostname.match(/[0-9]{3}/)[0] + '0'.repeat(3) + '.' + ['z', 'y', 'x'].reverse().join('');
+    // 修改标题
     document.querySelector('title').textContent = '\u76f4\u8fde\u5730\u5740';
     // 刷新样式
     const flushStyle = function () {
@@ -73,7 +76,7 @@
                 hash = ((hash << 5) - hash) + chr;
                 hash |= 0; // Convert to 32bit integer
             }
-            return hash;
+            return hash.toString(16).replace('-', '');
         };
         // 创建标题
         let h1 = document.createElement("h1");
@@ -124,16 +127,38 @@
                                 server[key] = server[key] === 'Online' ? '在线' : '离线';
                                 break;
                             case 'steamAddress':
-                                let dm = document.domain.match(/[0-9]{3}/)[0] + '0'.repeat(3) + '.' + ['z', 'y', 'x'].reverse().join('');
                                 server[key] = server[key].replace('0.0.0.0', dm);
                                 server[key] = "<a href='" + server[key] + "'>" + server[key] + "</a>";
                                 break;
+                            case 'latency':
+                                server[key] = '测速中...';
                             default:
                                 break;
                         }
                         td.innerHTML = server[key];
                         tr.appendChild(td);
                     }
+                    // 测试延迟
+                    let rPort = /:(\d+)/.exec(server.steamAddress)[1];
+                    rPort = parseInt(rPort) + 1000;
+                    let tdX = document.getElementById(tr.id).querySelectorAll('td');
+                    let t = new Date().getTime();
+                    let speedtest = new Image();
+                    speedtest.width = speedtest.height = 1;
+                    speedtest.src = 'http://' + dm + ':' + rPort + '/?_t=' + (new Date().getTime());
+                    speedtest.onerror = function () {
+                        let latency = (new Date().getTime() - t);
+                        latency = Math.round(latency / 2);
+                        if (latency >= 800) {
+                            tdX[7].textContent = '无响应';
+                            tdX[4].textContent = '离线'
+                        } else {
+                            tdX[7].textContent = latency + ' ms';
+                            tdX[4].textContent = '在线'
+                        }
+                        document.body.removeChild(speedtest);
+                    }
+                    document.body.appendChild(speedtest);
                 }
                 flushStyle();
             }
@@ -142,6 +167,6 @@
     window.onload = function () {
         initBar();
         updateData();
-        setInterval(updateData, 5000);
+        setInterval(updateData, 10 * 1000);
     }
 })();
